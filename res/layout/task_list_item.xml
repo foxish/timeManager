@@ -6,8 +6,6 @@
     android:orientation="horizontal"
     android:padding="5dip" >
 
-    <!-- ListRow Left sied Thumbnail image -->
-
     <LinearLayout
         android:id="@+id/thumbnail"
         android:layout_width="wrap_content"
@@ -28,8 +26,6 @@
             android:textSize="20dip" />
     </LinearLayout>
 
-    <!-- Title Of Song -->
-
     <TextView
         android:id="@+id/title"
         android:layout_width="wrap_content"
@@ -40,20 +36,6 @@
         android:textSize="15dip"
         android:textStyle="bold"
         android:typeface="sans" />
-
-    <!-- Artist Name -->
-
-    <TextView
-        android:id="@+id/artist"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/title"
-        android:layout_marginTop="1dip"
-        android:layout_toRightOf="@+id/thumbnail"
-        android:textColor="#343434"
-        android:textSize="10dip" />
-
-    <!-- Rightend Duration -->
 
     <TextView
         android:id="@+id/duration"
@@ -74,5 +56,6 @@
         android:layout_alignBottom="@+id/thumbnail"
         android:layout_alignRight="@+id/duration"
         android:textColor="@android:color/background_dark"
-        android:text="@string/time_default" />"
+        android:text="@string/time_default" />
+    
 </RelativeLayout>

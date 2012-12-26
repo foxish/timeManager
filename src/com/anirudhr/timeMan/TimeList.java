@@ -2,10 +2,10 @@ package com.anirudhr.timeMan;
 
 import android.content.ContentValues;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
@@ -16,6 +16,7 @@ import android.view.View;
 import android.view.ContextMenu.ContextMenuInfo;
 import android.widget.ListView;
 import android.widget.AdapterView.AdapterContextMenuInfo;
+import android.widget.TextView;
 
 import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.app.SherlockListFragment;
@@ -28,7 +29,6 @@ import com.anirudhr.timeMan.db.TodoTable;
 
 public class TimeList extends SherlockFragmentActivity
 {
-    public static final String PREFS_NAME = "FoxTimer";
 	static String[] dummyData;
 	private static final int ACTIVITY_CREATE = 0;
 	private static final int ACTIVITY_EDIT = 1;
@@ -37,7 +37,9 @@ public class TimeList extends SherlockFragmentActivity
 	private static final int EDIT_ID = Menu.FIRST + 2;
 
 	public static class CurrentListFragment extends SherlockListFragment implements LoaderManager.LoaderCallbacks<Cursor>	{
-        FoxListAdapter mAdapter;
+        private FoxListAdapter mAdapter;
+        private TimeStructures ts;
+        
         @Override public void onActivityCreated(Bundle savedInstanceState) {
 	        super.onActivityCreated(savedInstanceState);
 	        setEmptyText("No data");
@@ -46,6 +48,9 @@ public class TimeList extends SherlockFragmentActivity
             setListShown(false);
             getLoaderManager().initLoader(0, null, this);
 	        setHasOptionsMenu(true);
+	        
+	        //create instance of the timeStructures
+	        ts = new TimeStructures(getActivity());
 		}	
 		
 		@Override
@@ -79,14 +84,30 @@ public class TimeList extends SherlockFragmentActivity
 			projectItem.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
 	    }
 		@Override public void onListItemClick(ListView l, View v, int position, long id) {
-			Log.i("UserClick", "Item clicked: " + id);
+			if(ts.getRunning() == 0){
+				//no task running at all
+				final long start = System.currentTimeMillis();
+				ts.setCurrentTaskStart(start);
+				ts.setRunning(id);
+				ts.startTimer(v, start, id);
+			}
+			else
+			{
+				//stop all running tasks
+				ts.killTimer();
+				updateDatabase(ts.getRunning());
+				ts.setRunning(0);
+			}
+        }
+		private void updateDatabase(long id){
+			long time = System.currentTimeMillis() - ts.getCurrentTaskStart() + ts.getOffsetFromDatabase(id);
 			ContentValues values = new ContentValues();
 			values.put(TodoTable.COLUMN_ID, id);
-			values.put(TodoTable.COLUMN_DESCRIPTION, "00:00:10");
+			values.put(TodoTable.COLUMN_TIME, time);
 			Uri todoUri = Uri.parse(MyTodoContentProvider.CONTENT_URI + "/" + id);
 			getActivity().getContentResolver().update(todoUri, values, null, null);
-			
-        }
+		}
+		
 		 @Override public boolean onOptionsItemSelected(MenuItem item) {
             switch (item.getItemId()) {
             	case ADD_PROJECT_ID:
@@ -97,17 +118,18 @@ public class TimeList extends SherlockFragmentActivity
             return false;
 		 }
 		 
-		static final String[] projection = { TodoTable.COLUMN_ID, TodoTable.COLUMN_SUMMARY, TodoTable.COLUMN_DESCRIPTION };
+		static final String[] projection = { TodoTable.COLUMN_ID, TodoTable.COLUMN_ACTIVITY, TodoTable.COLUMN_TIME, TodoTable.COLUMN_PRIORITY };
 		
 		@Override
 		public Loader<Cursor> onCreateLoader(int id, Bundle args) {
+			String sortOrder = TodoTable.COLUMN_PRIORITY;
 			CursorLoader cursorLoader = new CursorLoader(getActivity(), 
-					MyTodoContentProvider.CONTENT_URI, projection, null, null, null);
+					MyTodoContentProvider.CONTENT_URI, projection, null, null, sortOrder);
 			return cursorLoader;
 		}
 		@Override
 		public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
-			mAdapter = new FoxListAdapter(getActivity().getApplicationContext(), data, true);
+			mAdapter = new FoxListAdapter(getActivity().getApplicationContext(), getActivity(), data, true);
 			setListAdapter(mAdapter);
 			
             if (isResumed()) {

@@ -8,27 +8,31 @@
         android:id="@+id/LinearLayout01"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" >
-
+        
         <EditText
             android:id="@+id/todo_edit_summary"
             android:layout_width="0dip"
             android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
             android:layout_weight="1"
             android:hint="@string/todo_edit_summary"
             android:imeOptions="actionNext" >
         </EditText>
     </LinearLayout>
-
+
     <EditText
         android:id="@+id/todo_edit_description"
+        android:inputType="number"
         android:layout_width="match_parent"
-        android:layout_height="60dp"
+        android:layout_height="wrap_content"
         android:gravity="top"
         android:hint="@string/todo_edit_description"
-        android:imeOptions="actionNext" >
+        android:imeOptions="actionNext" 
+        android:maxLength="3"
+        >
 
     </EditText>
-
+
     <Button
         android:id="@+id/todo_edit_button"
         android:layout_width="wrap_content"

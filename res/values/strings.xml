@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">ProjMan</string>
+    <string name="app_name">FoxTimer</string>
     <string name="hello_world">Hello world!</string>
     <string name="menu_settings">Settings</string>
     <string name="title_activity_main">FoxTimer</string>
@@ -12,11 +12,9 @@
 	<string name="menu_insert">Add Item</string>
 	<string name="menu_delete">Delete Todo</string>
 	<string name="menu_edit">Edit Todo</string>
-	
-	<string name="todo_summary">Summary</string>
 	<string name="todo_description">Delete Todo</string>
-	<string name="todo_edit_summary">Summary</string>
-	<string name="todo_edit_description">Description</string>
+	<string name="todo_edit_summary">Activity Name</string>
+	<string name="todo_edit_description">Priority (0 is highest)</string>
 	<string name="todo_edit_confirm">Confirm</string>
 	<string name="time_default">00:00:00</string>
 </resources>

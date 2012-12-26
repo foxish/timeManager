@@ -8,18 +8,18 @@ public class TodoTable {
   // Table1: MainTable
   public static final String TABLE_TIMERS = "todo";
   public static final String COLUMN_ID = "_id";
-  public static final String COLUMN_CATEGORY = "category";
-  public static final String COLUMN_SUMMARY = "summary";
-  public static final String COLUMN_DESCRIPTION = "description";
+  public static final String COLUMN_PRIORITY = "priority";
+  public static final String COLUMN_ACTIVITY = "activity";
+  public static final String COLUMN_TIME = "time";
   
   // Table creation SQL statement
   private static final String TIMELIST_CREATE = "create table " 
       + TABLE_TIMERS
       + "(" 
       + COLUMN_ID + " integer primary key autoincrement, " 
-      + COLUMN_CATEGORY + " text not null, " 
-      + COLUMN_SUMMARY + " text not null, " 
-      + COLUMN_DESCRIPTION + " text not null " 
+      + COLUMN_PRIORITY + " integer not null, " 
+      + COLUMN_ACTIVITY + " text not null, " 
+      + COLUMN_TIME + " integer not null " 
       + ");";
   
 
@@ -30,8 +30,8 @@ public class TodoTable {
   public static void onUpgrade(SQLiteDatabase database, int oldVersion,
       int newVersion) {
 	  
-    /*if(!(newVersion > oldVersion))
-		return;*/ //enable later
+    if(!(newVersion > oldVersion))
+		return;
 
     Log.w(TodoTable.class.getName(), "Upgrading database from version "
         + oldVersion + " to " + newVersion

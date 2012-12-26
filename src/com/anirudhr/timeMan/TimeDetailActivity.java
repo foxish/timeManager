@@ -13,7 +13,6 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Spinner;
 import android.widget.Toast;
 
 public class TimeDetailActivity extends Activity {
@@ -46,7 +45,7 @@ public class TimeDetailActivity extends Activity {
 
 	    confirmButton.setOnClickListener(new View.OnClickListener() {
 	      public void onClick(View view) {
-	        if (TextUtils.isEmpty(mTitleText.getText().toString())) {
+	        if (TextUtils.isEmpty(mTitleText.getText().toString())||TextUtils.isEmpty(mBodyText.getText().toString())) {
 	          makeToast();
 	        } else {
 	          setResult(RESULT_OK);
@@ -58,22 +57,19 @@ public class TimeDetailActivity extends Activity {
 	  }
 
 	  private void fillData(Uri uri) {
-	    String[] projection = { TodoTable.COLUMN_SUMMARY,
-	        TodoTable.COLUMN_DESCRIPTION, TodoTable.COLUMN_CATEGORY };
+	    String[] projection = { TodoTable.COLUMN_ACTIVITY, TodoTable.COLUMN_PRIORITY };
 	    Cursor cursor = getContentResolver().query(uri, projection, null, null,
 	        null);
 	    if (cursor != null) {
 	      cursor.moveToFirst();
 	      mTitleText.setText(cursor.getString(cursor
-	          .getColumnIndexOrThrow(TodoTable.COLUMN_SUMMARY)));
+	          .getColumnIndexOrThrow(TodoTable.COLUMN_ACTIVITY)));
 	      mBodyText.setText(cursor.getString(cursor
-	          .getColumnIndexOrThrow(TodoTable.COLUMN_DESCRIPTION)));
-
-	      // Always close the cursor
+	          .getColumnIndexOrThrow(TodoTable.COLUMN_PRIORITY)));
+	      //Always close the cursor
 	      cursor.close();
 	    }
 	  }
-
 	  protected void onSaveInstanceState(Bundle outState) {
 	    super.onSaveInstanceState(outState);
 	    saveState();
@@ -90,17 +86,16 @@ public class TimeDetailActivity extends Activity {
 	    String summary = mTitleText.getText().toString();
 	    String description = mBodyText.getText().toString();
 
-	    // Only save if either summary or description
-	    // is available
-
-	    if (description.length() == 0 && summary.length() == 0) {
+	    // Only save if both summary or description are available
+	    if (description.length() == 0 || summary.length() == 0) {
 	      return;
 	    }
 
 	    ContentValues values = new ContentValues();
-	    values.put(TodoTable.COLUMN_SUMMARY, summary);
-	    values.put(TodoTable.COLUMN_DESCRIPTION, description);
-
+	    values.put(TodoTable.COLUMN_ACTIVITY, summary);
+	    values.put(TodoTable.COLUMN_TIME, "0");
+	    values.put(TodoTable.COLUMN_PRIORITY, description);
+	    
 	    if (todoUri == null) {
 	      // New todo
 	      todoUri = getContentResolver().insert(MyTodoContentProvider.CONTENT_URI, values);
@@ -111,7 +106,7 @@ public class TimeDetailActivity extends Activity {
 	  }
 
 	  private void makeToast() {
-	    Toast.makeText(TimeDetailActivity.this, "Please maintain a summary",
+	    Toast.makeText(TimeDetailActivity.this, "The activity & priority must be set",
 	        Toast.LENGTH_LONG).show();
 	  }
 	} 

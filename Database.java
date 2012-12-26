@@ -36,7 +36,7 @@ import com.actionbarsherlock.view.MenuItem;
 
 public class Database extends SherlockFragmentActivity {
     static final String TAG = "Database";
-    public static final String AUTHORITY = "com.anirudhr.projman.Database";
+    public static final String AUTHORITY = "com.anirudhr.timeMan.Database";
 
     /**
      * Definition of the contract for the main table of our provider.

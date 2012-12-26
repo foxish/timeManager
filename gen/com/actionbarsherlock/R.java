@@ -827,14 +827,13 @@ containing a value of this type.
         public static final int abs__title=0x7f04001b;
         public static final int abs__titleDivider=0x7f04001c;
         public static final int abs__up=0x7f04000b;
-        public static final int artist=0x7f040030;
         public static final int category=0x7f040027;
         public static final int disableHome=0x7f040009;
-        public static final int duration=0x7f040031;
+        public static final int duration=0x7f040030;
         public static final int homeAsUp=0x7f040006;
         public static final int listMode=0x7f040002;
         public static final int list_image=0x7f04002e;
-        public static final int menu_settings=0x7f040033;
+        public static final int menu_settings=0x7f040032;
         public static final int normal=0x7f040001;
         public static final int pager=0x7f04002c;
         public static final int showCustom=0x7f040008;
@@ -843,7 +842,7 @@ containing a value of this type.
         public static final int tabMode=0x7f040003;
         public static final int thumbnail=0x7f04002d;
         public static final int title=0x7f04002f;
-        public static final int todayTime=0x7f040032;
+        public static final int todayTime=0x7f040031;
         public static final int todo_edit_button=0x7f04002b;
         public static final int todo_edit_description=0x7f04002a;
         public static final int todo_edit_summary=0x7f040029;
@@ -925,13 +924,12 @@ containing a value of this type.
         public static final int menu_insert=0x7f090012;
         public static final int menu_settings=0x7f09000c;
         public static final int no_todos=0x7f090011;
-        public static final int time_default=0x7f09001a;
+        public static final int time_default=0x7f090019;
         public static final int title_activity_main=0x7f09000d;
-        public static final int todo_description=0x7f090016;
-        public static final int todo_edit_confirm=0x7f090019;
-        public static final int todo_edit_description=0x7f090018;
-        public static final int todo_edit_summary=0x7f090017;
-        public static final int todo_summary=0x7f090015;
+        public static final int todo_description=0x7f090015;
+        public static final int todo_edit_confirm=0x7f090018;
+        public static final int todo_edit_description=0x7f090017;
+        public static final int todo_edit_summary=0x7f090016;
     }
     public static final class style {
         public static final int AppTheme=0x7f0a0058;
