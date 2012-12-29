@@ -6,6 +6,7 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
@@ -16,8 +17,6 @@ import android.view.View;
 import android.view.ContextMenu.ContextMenuInfo;
 import android.widget.ListView;
 import android.widget.AdapterView.AdapterContextMenuInfo;
-import android.widget.TextView;
-
 import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.app.SherlockListFragment;
 import com.actionbarsherlock.view.Menu;
@@ -39,11 +38,12 @@ public class TimeList extends SherlockFragmentActivity
 	public static class CurrentListFragment extends SherlockListFragment implements LoaderManager.LoaderCallbacks<Cursor>	{
         private FoxListAdapter mAdapter;
         private TimeStructures ts;
+        private Handler resetHandler = new Handler();
+        private Runnable resetTask;
         
         @Override public void onActivityCreated(Bundle savedInstanceState) {
 	        super.onActivityCreated(savedInstanceState);
 	        setEmptyText("No data");
-            setHasOptionsMenu(true);
             registerForContextMenu(getListView());
             setListShown(false);
             getLoaderManager().initLoader(0, null, this);
@@ -52,7 +52,29 @@ public class TimeList extends SherlockFragmentActivity
 	        //create instance of the timeStructures
 	        ts = new TimeStructures(getActivity());
 		}	
+		@Override
+		public void onResume(){
+			super.onResume();
+			trackExpiration();
+			
+			if(resetHandler!=null)
+				resetHandler.removeCallbacks(resetTask);
+			resetTask = new Runnable() {
+				public void run() {			
+						trackExpiration();
+					}
+				};
+	        resetHandler.postDelayed(resetTask, ts.getExpirationTime() - System.currentTimeMillis());
+		}
 		
+		public void trackExpiration(){
+			if(ts.timeToReset()){
+				Log.d("fox", "Resetting DB");
+				resetDatabase();
+			}
+			
+		}
+        
 		@Override
 		public void onCreateContextMenu(ContextMenu menu, View v,
 		  ContextMenuInfo menuInfo) {
@@ -82,7 +104,9 @@ public class TimeList extends SherlockFragmentActivity
 		public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
 			MenuItem projectItem = menu.add(Menu.NONE, ADD_PROJECT_ID, 0, "Add Activity");
 			projectItem.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
+			super.onCreateOptionsMenu(menu, inflater);
 	    }
+		
 		@Override public void onListItemClick(ListView l, View v, int position, long id) {
 			if(ts.getRunning() == 0){
 				//no task running at all
@@ -108,6 +132,14 @@ public class TimeList extends SherlockFragmentActivity
 			getActivity().getContentResolver().update(todoUri, values, null, null);
 		}
 		
+		private void resetDatabase(){
+			//updates and fills ALL entries with set value ##CAREFUL
+			ContentValues values = new ContentValues();
+			values.put(TodoTable.COLUMN_TIME, 0);
+			Uri todoUri = Uri.parse(String.valueOf(MyTodoContentProvider.CONTENT_URI));
+			getActivity().getContentResolver().update(todoUri, values, null, null);
+		}
+		
 		 @Override public boolean onOptionsItemSelected(MenuItem item) {
             switch (item.getItemId()) {
             	case ADD_PROJECT_ID:
@@ -117,7 +149,6 @@ public class TimeList extends SherlockFragmentActivity
             }	
             return false;
 		 }
-		 
 		static final String[] projection = { TodoTable.COLUMN_ID, TodoTable.COLUMN_ACTIVITY, TodoTable.COLUMN_TIME, TodoTable.COLUMN_PRIORITY };
 		
 		@Override

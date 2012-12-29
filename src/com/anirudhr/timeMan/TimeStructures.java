@@ -2,11 +2,11 @@ package com.anirudhr.timeMan;
 
 // Contains all kinds of helper-methods
 
+import java.util.Calendar;
 import com.anirudhr.timeMan.db.MyTodoContentProvider;
 import com.anirudhr.timeMan.db.TodoTable;
 
 import android.app.Activity;
-import android.content.ContentValues;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.graphics.Color;
@@ -60,7 +60,7 @@ public class TimeStructures{
 		long millis = endTime - startTime + offset;
 		int seconds = (int) (millis / 1000);
 		int hours = seconds/3600;
-		int minutes = seconds / 60;
+		int minutes = (seconds %3600)/60;
 		seconds     = seconds % 60;
 		
 		StringBuilder timeString = new StringBuilder();
@@ -97,11 +97,60 @@ public class TimeStructures{
 		};
         mHandler.postDelayed(mUpdateTimeTask, 100);
 	}
-
+	
 	public void killTimer(){
 		if(mHandler!=null)
 			mHandler.removeCallbacks(mUpdateTimeTask);
 	}
 	
-	public static final String PREFS_NAME = "FoxTimer";
+	//return true if day-threshold is hit and reset time has come
+	//return false if timer need not be reset
+	public boolean timeToReset(){
+		if(getExpirationTime() > 0){
+			//an expiration time is set
+			if(getExpirationTime() > System.currentTimeMillis()){
+				//expiration time is in the future compared to current time
+				//no action needed
+				return false;
+			}else{
+				if(getCurrentTaskStart() < getExpirationTime())
+					setCurrentTaskStart(timeOfExpiration(PREVIOUS));
+				setExpirationTime();
+				return true;
+			}
+		}else{
+			//set a new expiration time in the future
+			setExpirationTime();
+			return false;
+		}
+			
+	}
+	private long timeOfExpiration(int dayOffset) {
+		//returns the NEXT time of expiration, unless dayOffset is negative
+		//supply dayOffset as -1 or 0
+		int hh = 3, mm = 00; //this is 24 hour time, set by user for reset of day-cycle
+	    Calendar cal = Calendar.getInstance();
+	    cal.setTimeInMillis(System.currentTimeMillis());
+	    cal.set(Calendar.HOUR_OF_DAY, hh); //set hours
+	    cal.set(Calendar.MINUTE, mm); // set minutes
+	    cal.set(Calendar.SECOND, 0); //set seconds to 0
+	    cal.set(Calendar.MILLISECOND, 0); //set ms to 0
+	    if(cal.getTimeInMillis() < System.currentTimeMillis())
+	    	cal.add(Calendar.DATE, 1);
+	    cal.add(Calendar.DATE, dayOffset);
+	    return cal.getTimeInMillis();
+	}
+	
+	public long getExpirationTime() {
+		return settings.getLong("expirationTime", 0);
+	}
+
+	public void setExpirationTime() {
+		editor.putLong("expirationTime", timeOfExpiration(NEXT));
+		editor.commit();
+	}
+
+	private static final String PREFS_NAME = "FoxTimer";
+	public static final int NEXT = 0;
+	public static final int PREVIOUS = -1;
 }

@@ -16,14 +16,14 @@
 
         <TextView
             android:id="@+id/list_image"
-            android:layout_width="35dip"
-            android:layout_height="35dip"
+            android:layout_width="45dip"
+            android:layout_height="45dip"
             android:background="@android:color/background_dark"
             android:gravity="center"
             android:includeFontPadding="false"
             android:scaleType="fitXY"
             android:textColor="@android:color/background_light"
-            android:textSize="20dip" />
+            android:textSize="16sp" />
     </LinearLayout>
 
     <TextView
@@ -35,27 +35,16 @@
         android:textColor="#040404"
         android:textSize="15dip"
         android:textStyle="bold"
-        android:typeface="sans" />
-
-    <TextView
-        android:id="@+id/duration"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:layout_alignTop="@id/title"
-        android:layout_marginRight="5dip"
-        android:gravity="right"
-        android:textColor="#10bcc9"
-        android:textSize="10dip"
-        android:textStyle="bold" />
-
+        android:typeface="sans" />
     <TextView
         android:id="@+id/todayTime"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignBottom="@+id/thumbnail"
-        android:layout_alignRight="@+id/duration"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:text="@string/time_default"
         android:textColor="@android:color/background_dark"
-        android:text="@string/time_default" />
+        android:textSize="20sp" />
     
 </RelativeLayout>

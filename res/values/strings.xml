@@ -10,8 +10,8 @@
     <string name="hello">Hello World, Todo!</string>
 	<string name="no_todos">Currently there are no Todo items maintained</string>
 	<string name="menu_insert">Add Item</string>
-	<string name="menu_delete">Delete Todo</string>
-	<string name="menu_edit">Edit Todo</string>
+	<string name="menu_delete">Delete Task</string>
+	<string name="menu_edit">Edit Task</string>
 	<string name="todo_description">Delete Todo</string>
 	<string name="todo_edit_summary">Activity Name</string>
 	<string name="todo_edit_description">Priority (0 is highest)</string>

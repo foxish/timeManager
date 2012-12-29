@@ -8,11 +8,15 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TabHost;
 import android.widget.TabWidget;
 import com.actionbarsherlock.app.SherlockFragmentActivity;
+import com.actionbarsherlock.view.Menu;
+import com.actionbarsherlock.view.MenuInflater;
+import com.actionbarsherlock.view.MenuItem;
 import com.anirudhr.timeMan.R;
 
 /**
@@ -27,7 +31,7 @@ public class FoxMain extends SherlockFragmentActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        setTheme(R.style.Theme_Sherlock_Light_ForceOverflow);
+        setTheme(R.style.Sherlock___Theme_DarkActionBar);
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.fragment_tabs_pager);
@@ -40,16 +44,39 @@ public class FoxMain extends SherlockFragmentActivity {
 
         mTabsAdapter.addTab(mTabHost.newTabSpec("Current").setIndicator("Current"),
         		TimeList.CurrentListFragment.class, null);
+        
         mTabsAdapter.addTab(mTabHost.newTabSpec("Statistics").setIndicator("Statistics"),
         		Statistics.CurrentListFragment.class, null);
+
         
-        //write a setheights method
+        //TODO: write a setheights method
         mTabHost.getTabWidget().getChildAt(0).getLayoutParams().height = 50;
         mTabHost.getTabWidget().getChildAt(1).getLayoutParams().height = 50;
         
         if (savedInstanceState != null) {
             mTabHost.setCurrentTabByTag(savedInstanceState.getString("tab"));
         }
+    }
+    
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getSupportMenuInflater();
+        inflater.inflate(R.menu.application_menu, menu);
+        return true;
+    }
+    
+    public boolean onOptionsItemSelected(MenuItem item) {
+    	switch (item.getItemId()) {
+    	case R.id.settings:
+        	Log.d("fox", "settings");
+        	//startActivity(new Intent(this, Help.class));
+        	return true;
+        case R.id.about:
+        	Log.d("fox", "about");
+        	//startActivity(new Intent(this, About.class));
+        	return true;
+        default:
+        	return super.onOptionsItemSelected(item);
+    	}
     }
     
     @Override
