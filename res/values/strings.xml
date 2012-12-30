@@ -1,14 +1,12 @@
 <resources>
-    <string name="app_name">FoxTimer</string>
-    <string name="hello_world">Hello world!</string>
+    <string name="app_name">FoxTracker</string>
     <string name="menu_settings">Settings</string>
-    <string name="title_activity_main">FoxTimer</string>
+    <string name="title_activity_main">FoxTracker</string>
     <string name="add_task">Add Task</string>
     <string name="add_project">Add Project</string>
     
     
     <string name="hello">Hello World, Todo!</string>
-	<string name="no_todos">Currently there are no Todo items maintained</string>
 	<string name="menu_insert">Add Item</string>
 	<string name="menu_delete">Delete Task</string>
 	<string name="menu_edit">Edit Task</string>

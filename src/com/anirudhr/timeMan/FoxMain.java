@@ -17,7 +17,6 @@ import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
-import com.anirudhr.timeMan.R;
 
 /**
  * Demonstrates combining a TabHost with a ViewPager to implement a tab UI

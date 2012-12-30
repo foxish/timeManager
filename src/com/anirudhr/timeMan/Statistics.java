@@ -25,7 +25,14 @@ public class Statistics extends SherlockFragmentActivity	{
 		}
 		@Override public void onListItemClick(ListView l, View v, int position, long id) {
             Log.i("UserClick", "Item clicked: " + id);
-        }	
+        }
+		public void onResume(){
+			super.onResume();
+			
+			Settings sett = new Settings(getActivity());
+			sett.writeToXML();
+		}
+		
 	}	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -36,5 +43,8 @@ public class Statistics extends SherlockFragmentActivity	{
 			fm.beginTransaction().add(android.R.id.content, list).commit();
 		}
 	}
+	
+	
+	
 	
 }

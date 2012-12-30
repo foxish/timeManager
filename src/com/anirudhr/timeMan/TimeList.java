@@ -36,7 +36,7 @@ public class TimeList extends SherlockFragmentActivity
 	private static final int EDIT_ID = Menu.FIRST + 2;
 
 	public static class CurrentListFragment extends SherlockListFragment implements LoaderManager.LoaderCallbacks<Cursor>	{
-        private FoxListAdapter mAdapter;
+        private FoxListAdapter mAdapter = null;
         private TimeStructures ts;
         private Handler resetHandler = new Handler();
         private Runnable resetTask;
@@ -69,7 +69,6 @@ public class TimeList extends SherlockFragmentActivity
 		
 		public void trackExpiration(){
 			if(ts.timeToReset()){
-				Log.d("fox", "Resetting DB");
 				resetDatabase();
 			}
 			
@@ -118,7 +117,7 @@ public class TimeList extends SherlockFragmentActivity
 			else
 			{
 				//stop all running tasks
-				ts.killTimer();
+				ts.killTimer(v);
 				updateDatabase(ts.getRunning());
 				ts.setRunning(0);
 			}
@@ -134,6 +133,8 @@ public class TimeList extends SherlockFragmentActivity
 		
 		private void resetDatabase(){
 			//updates and fills ALL entries with set value ##CAREFUL
+			
+			
 			ContentValues values = new ContentValues();
 			values.put(TodoTable.COLUMN_TIME, 0);
 			Uri todoUri = Uri.parse(String.valueOf(MyTodoContentProvider.CONTENT_URI));
@@ -160,9 +161,12 @@ public class TimeList extends SherlockFragmentActivity
 		}
 		@Override
 		public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
-			mAdapter = new FoxListAdapter(getActivity().getApplicationContext(), getActivity(), data, true);
-			setListAdapter(mAdapter);
-			
+			if(mAdapter == null){
+				mAdapter = new FoxListAdapter(getActivity().getApplicationContext(), getActivity(), data, true);
+				setListAdapter(mAdapter);
+			}else{
+				mAdapter.changeCursor(data);
+			}
             if (isResumed()) {
                 setListShown(true);
             } else {

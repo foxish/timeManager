@@ -1080,22 +1080,20 @@ containing a value of this type.
         /**  Description of a share target (both in the list of such or the default share button) in a ShareActionProvider (share UI). [CHAR LIMIT=NONE] 
          */
         public static final int abs__shareactionprovider_share_with_application=0x7f090009;
-        public static final int add_project=0x7f090014;
-        public static final int add_task=0x7f090013;
+        public static final int add_project=0x7f090013;
+        public static final int add_task=0x7f090012;
         public static final int app_name=0x7f09000f;
-        public static final int hello=0x7f090015;
-        public static final int hello_world=0x7f090010;
-        public static final int menu_delete=0x7f090018;
-        public static final int menu_edit=0x7f090019;
-        public static final int menu_insert=0x7f090017;
-        public static final int menu_settings=0x7f090011;
-        public static final int no_todos=0x7f090016;
-        public static final int time_default=0x7f09001e;
-        public static final int title_activity_main=0x7f090012;
-        public static final int todo_description=0x7f09001a;
-        public static final int todo_edit_confirm=0x7f09001d;
-        public static final int todo_edit_description=0x7f09001c;
-        public static final int todo_edit_summary=0x7f09001b;
+        public static final int hello=0x7f090014;
+        public static final int menu_delete=0x7f090016;
+        public static final int menu_edit=0x7f090017;
+        public static final int menu_insert=0x7f090015;
+        public static final int menu_settings=0x7f090010;
+        public static final int time_default=0x7f09001c;
+        public static final int title_activity_main=0x7f090011;
+        public static final int todo_description=0x7f090018;
+        public static final int todo_edit_confirm=0x7f09001b;
+        public static final int todo_edit_description=0x7f09001a;
+        public static final int todo_edit_summary=0x7f090019;
     }
     public static final class style {
         public static final int AppTheme=0x7f0a0059;

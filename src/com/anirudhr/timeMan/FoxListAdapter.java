@@ -14,14 +14,14 @@ import android.widget.TextView;
 
 public class FoxListAdapter extends CursorAdapter  {
 	private Activity a;
+	private TimeStructures ts;
 	public FoxListAdapter(Context con, Activity a, Cursor c, boolean autoRequery) {
 		super(con, c, autoRequery);
 		this.a = a;
+        ts = new TimeStructures(a);
 	}
 	@Override
 	public void bindView(View vi, Context arg1, Cursor cursor) {
-		TimeStructures ts = new TimeStructures(a);
-		
 		TextView task = (TextView)vi.findViewById(R.id.title); // heading
 		TextView priority = (TextView)vi.findViewById(R.id.list_image); // left number
 		TextView timeElapsed =  (TextView)vi.findViewById(R.id.todayTime); //time
@@ -29,7 +29,8 @@ public class FoxListAdapter extends CursorAdapter  {
 		task.setText(cursor.getString(cursor.getColumnIndex(TodoTable.COLUMN_ACTIVITY)));
 		priority.setText(cursor.getString(cursor.getColumnIndex(TodoTable.COLUMN_PRIORITY)));
 		
-		long id = cursor.getLong(cursor.getColumnIndex(TodoTable.COLUMN_ID));
+		long id = cursor.getLong(cursor.getColumnIndex(TodoTable.COLUMN_ID));	
+		timeElapsed.setText(R.string.time_default);
 		if(ts.getRunning() == id){
 			ts.startTimer(vi, ts.getCurrentTaskStart(), id);
 		}else{
@@ -41,9 +42,22 @@ public class FoxListAdapter extends CursorAdapter  {
 	public View newView(Context context, Cursor cursor, ViewGroup arg2) {
 		LayoutInflater inflater = LayoutInflater.from(context);
         View vi = inflater.inflate(R.layout.task_list_item, null);
-        bindView(vi, context, cursor);
         return vi;
 	}
-
-   
+	@Override
+	public int getItemViewType(int position) {
+	    mCursor.moveToPosition(position);
+	    if (mCursor.getLong(mCursor.getColumnIndex(TodoTable.COLUMN_ID)) == ts.getRunning()){
+	        return IGNORE_ITEM_VIEW_TYPE;
+	    }
+	    return super.getItemViewType(position);
+	}
+    /*@Override
+    public int getItemViewType(int position) {
+        return position;
+    }
+    @Override
+    public int getViewTypeCount() {
+        return 500;
+    }*/
 }

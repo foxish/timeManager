@@ -2,7 +2,10 @@ package com.anirudhr.timeMan;
 
 // Contains all kinds of helper-methods
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
+
 import com.anirudhr.timeMan.db.MyTodoContentProvider;
 import com.anirudhr.timeMan.db.TodoTable;
 
@@ -84,8 +87,7 @@ public class TimeStructures{
 	public void startTimer(View v, final long start, long id){
 		final long offset = getOffsetFromDatabase(id);
 		
-		if(mHandler!=null)
-			mHandler.removeCallbacks(mUpdateTimeTask);			
+		mHandler.removeCallbacks(mUpdateTimeTask);			
 		final TextView time = (TextView)v.findViewById(R.id.todayTime);
 		
 		toggleColor(time, true);
@@ -98,9 +100,10 @@ public class TimeStructures{
         mHandler.postDelayed(mUpdateTimeTask, 100);
 	}
 	
-	public void killTimer(){
-		if(mHandler!=null)
-			mHandler.removeCallbacks(mUpdateTimeTask);
+	public void killTimer(View v){
+		mHandler.removeCallbacks(mUpdateTimeTask);
+		final TextView time = (TextView)v.findViewById(R.id.todayTime);
+		toggleColor(time, false);
 	}
 	
 	//return true if day-threshold is hit and reset time has come
@@ -139,6 +142,11 @@ public class TimeStructures{
 	    	cal.add(Calendar.DATE, 1);
 	    cal.add(Calendar.DATE, dayOffset);
 	    return cal.getTimeInMillis();
+	}
+	
+	public String getDate(long millis) {
+		SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy"); 
+		return formatter.format(new Date(millis));
 	}
 	
 	public long getExpirationTime() {
