@@ -11,6 +11,7 @@ public class TodoTable {
   public static final String COLUMN_PRIORITY = "priority";
   public static final String COLUMN_ACTIVITY = "activity";
   public static final String COLUMN_TIME = "time";
+  public static final String COLUMN_PRODUCTIVE = "productive";
   
   // Table creation SQL statement
   private static final String TIMELIST_CREATE = "create table " 
@@ -19,7 +20,8 @@ public class TodoTable {
       + COLUMN_ID + " integer primary key autoincrement, " 
       + COLUMN_PRIORITY + " integer not null, " 
       + COLUMN_ACTIVITY + " text not null, " 
-      + COLUMN_TIME + " integer not null " 
+      + COLUMN_TIME + " integer not null, "
+      + COLUMN_PRODUCTIVE + " integer not null "
       + ");";
   
 

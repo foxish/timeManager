@@ -3,19 +3,21 @@ package com.anirudhr.timeMan;
 import com.anirudhr.timeMan.R;
 import com.anirudhr.timeMan.db.TodoTable;
 
+import android.R.color;
 import android.app.Activity;
 import android.content.Context;
 import android.database.Cursor;
+import android.graphics.Color;
 import android.support.v4.widget.CursorAdapter;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-public class FoxListAdapter extends CursorAdapter  {
+public class TimeListAdapter extends CursorAdapter  {
 	private Activity a;
 	private TimeStructures ts;
-	public FoxListAdapter(Context con, Activity a, Cursor c, boolean autoRequery) {
+	public TimeListAdapter(Context con, Activity a, Cursor c, boolean autoRequery) {
 		super(con, c, autoRequery);
 		this.a = a;
         ts = new TimeStructures(a);
@@ -25,9 +27,14 @@ public class FoxListAdapter extends CursorAdapter  {
 		TextView task = (TextView)vi.findViewById(R.id.title); // heading
 		TextView priority = (TextView)vi.findViewById(R.id.list_image); // left number
 		TextView timeElapsed =  (TextView)vi.findViewById(R.id.todayTime); //time
-		
 		task.setText(cursor.getString(cursor.getColumnIndex(TodoTable.COLUMN_ACTIVITY)));
 		priority.setText(cursor.getString(cursor.getColumnIndex(TodoTable.COLUMN_PRIORITY)));
+		
+		long isChecked = cursor.getLong(cursor.getColumnIndex(TodoTable.COLUMN_PRODUCTIVE));
+		if(isChecked == 0)
+			task.setTextColor(Color.GRAY);
+		else
+			task.setTextColor(Color.BLACK);
 		
 		long id = cursor.getLong(cursor.getColumnIndex(TodoTable.COLUMN_ID));	
 		timeElapsed.setText(R.string.time_default);

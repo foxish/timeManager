@@ -36,7 +36,7 @@ public class TimeList extends SherlockFragmentActivity
 	private static final int EDIT_ID = Menu.FIRST + 2;
 
 	public static class CurrentListFragment extends SherlockListFragment implements LoaderManager.LoaderCallbacks<Cursor>	{
-        private FoxListAdapter mAdapter = null;
+        private TimeListAdapter mAdapter = null;
         private TimeStructures ts;
         private Handler resetHandler = new Handler();
         private Runnable resetTask;
@@ -69,6 +69,9 @@ public class TimeList extends SherlockFragmentActivity
 		
 		public void trackExpiration(){
 			if(ts.timeToReset()){
+				Settings settings = new Settings(getActivity());
+				settings.writeToXML();
+				globalAccess.changeData();
 				resetDatabase();
 			}
 			
@@ -91,7 +94,7 @@ public class TimeList extends SherlockFragmentActivity
 			  getActivity().getContentResolver().delete(uri, null, null);
 			  return true;
 			case EDIT_ID:
-			Intent i = new Intent(getActivity(), TimeDetailActivity.class);
+			Intent i = new Intent(getActivity(), TaskDetailActivity.class);
 			Uri todoUri = Uri.parse(MyTodoContentProvider.CONTENT_URI + "/" + info.id);
 			i.putExtra(MyTodoContentProvider.CONTENT_ITEM_TYPE, todoUri);
 			startActivityForResult(i, ACTIVITY_EDIT);
@@ -144,13 +147,13 @@ public class TimeList extends SherlockFragmentActivity
 		 @Override public boolean onOptionsItemSelected(MenuItem item) {
             switch (item.getItemId()) {
             	case ADD_PROJECT_ID:
-            		Intent i = new Intent(getActivity(), TimeDetailActivity.class);
+            		Intent i = new Intent(getActivity(), TaskDetailActivity.class);
             		startActivityForResult(i, ACTIVITY_CREATE);
             		break;
             }	
             return false;
 		 }
-		static final String[] projection = { TodoTable.COLUMN_ID, TodoTable.COLUMN_ACTIVITY, TodoTable.COLUMN_TIME, TodoTable.COLUMN_PRIORITY };
+		static final String[] projection = { TodoTable.COLUMN_ID, TodoTable.COLUMN_ACTIVITY, TodoTable.COLUMN_TIME, TodoTable.COLUMN_PRIORITY, TodoTable.COLUMN_PRODUCTIVE };
 		
 		@Override
 		public Loader<Cursor> onCreateLoader(int id, Bundle args) {
@@ -162,7 +165,7 @@ public class TimeList extends SherlockFragmentActivity
 		@Override
 		public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
 			if(mAdapter == null){
-				mAdapter = new FoxListAdapter(getActivity().getApplicationContext(), getActivity(), data, true);
+				mAdapter = new TimeListAdapter(getActivity().getApplicationContext(), getActivity(), data, true);
 				setListAdapter(mAdapter);
 			}else{
 				mAdapter.changeCursor(data);

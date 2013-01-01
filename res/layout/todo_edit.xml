@@ -33,6 +33,12 @@
 
     </EditText>
 
+    <CheckBox
+        android:id="@+id/is_productive"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/is_productive" />
+
     <Button
         android:id="@+id/todo_edit_button"
         android:layout_width="wrap_content"

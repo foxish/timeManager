@@ -131,7 +131,7 @@ public class TimeStructures{
 	private long timeOfExpiration(int dayOffset) {
 		//returns the NEXT time of expiration, unless dayOffset is negative
 		//supply dayOffset as -1 or 0
-		int hh = 3, mm = 00; //this is 24 hour time, set by user for reset of day-cycle
+		int hh = 3, mm = 05; //this is 24 hour time, set by user for reset of day-cycle
 	    Calendar cal = Calendar.getInstance();
 	    cal.setTimeInMillis(System.currentTimeMillis());
 	    cal.set(Calendar.HOUR_OF_DAY, hh); //set hours

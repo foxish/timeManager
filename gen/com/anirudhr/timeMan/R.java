@@ -932,7 +932,7 @@ containing a value of this type.
     }
     public static final class id {
         public static final int LinearLayout01=0x7f040034;
-        public static final int about=0x7f04003f;
+        public static final int about=0x7f040043;
         public static final int abs__action_bar=0x7f040022;
         public static final int abs__action_bar_container=0x7f040021;
         public static final int abs__action_bar_subtitle=0x7f040011;
@@ -976,24 +976,28 @@ containing a value of this type.
         public static final int category=0x7f040033;
         public static final int disableHome=0x7f040009;
         public static final int edit_query=0x7f040027;
+        public static final int history_date=0x7f040039;
+        public static final int history_util=0x7f04003b;
         public static final int homeAsUp=0x7f040006;
+        public static final int is_productive=0x7f040040;
         public static final int listMode=0x7f040002;
-        public static final int list_image=0x7f04003a;
-        public static final int menu_settings=0x7f04003d;
+        public static final int list_image=0x7f04003d;
+        public static final int menu_settings=0x7f040041;
         public static final int normal=0x7f040001;
         public static final int pager=0x7f040038;
-        public static final int settings=0x7f04003e;
+        public static final int settings=0x7f040042;
         public static final int showCustom=0x7f040008;
         public static final int showHome=0x7f040005;
         public static final int showTitle=0x7f040007;
         public static final int tabMode=0x7f040003;
-        public static final int thumbnail=0x7f040039;
-        public static final int title=0x7f04003b;
-        public static final int todayTime=0x7f04003c;
+        public static final int thumbnail=0x7f04003c;
+        public static final int title=0x7f04003e;
+        public static final int todayTime=0x7f04003f;
         public static final int todo_edit_button=0x7f040037;
         public static final int todo_edit_description=0x7f040036;
         public static final int todo_edit_summary=0x7f040035;
         public static final int useLogo=0x7f040004;
+        public static final int util_text=0x7f04003a;
         public static final int wrap_content=0x7f040000;
     }
     public static final class integer {
@@ -1027,8 +1031,9 @@ containing a value of this type.
         public static final int fragment_tabs_pager=0x7f030018;
         public static final int sherlock_spinner_dropdown_item=0x7f030019;
         public static final int sherlock_spinner_item=0x7f03001a;
-        public static final int task_list_item=0x7f03001b;
-        public static final int todo_edit=0x7f03001c;
+        public static final int stats_list_item=0x7f03001b;
+        public static final int task_list_item=0x7f03001c;
+        public static final int todo_edit=0x7f03001d;
     }
     public static final class menu {
         public static final int activity_main=0x7f0c0000;
@@ -1084,6 +1089,7 @@ containing a value of this type.
         public static final int add_task=0x7f090012;
         public static final int app_name=0x7f09000f;
         public static final int hello=0x7f090014;
+        public static final int is_productive=0x7f09001e;
         public static final int menu_delete=0x7f090016;
         public static final int menu_edit=0x7f090017;
         public static final int menu_insert=0x7f090015;
@@ -1094,6 +1100,7 @@ containing a value of this type.
         public static final int todo_edit_confirm=0x7f09001b;
         public static final int todo_edit_description=0x7f09001a;
         public static final int todo_edit_summary=0x7f090019;
+        public static final int util_string=0x7f09001d;
     }
     public static final class style {
         public static final int AppTheme=0x7f0a0059;

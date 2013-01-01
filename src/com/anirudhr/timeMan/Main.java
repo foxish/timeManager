@@ -23,7 +23,7 @@ import com.actionbarsherlock.view.MenuItem;
  * that switches between tabs and also allows the user to perform horizontal
  * flicks to move between the tabs.
  */
-public class FoxMain extends SherlockFragmentActivity {
+public class Main extends SherlockFragmentActivity {
     TabHost mTabHost;
     ViewPager  mViewPager;
     TabsAdapter mTabsAdapter;
