@@ -53,8 +53,8 @@ public class Main extends SherlockFragmentActivity {
 
         
         //TODO: write a setheights method
-        mTabHost.getTabWidget().getChildAt(0).getLayoutParams().height = 50;
-        mTabHost.getTabWidget().getChildAt(1).getLayoutParams().height = 50;
+        mTabHost.getTabWidget().getChildAt(0).getLayoutParams().height = 60;
+        mTabHost.getTabWidget().getChildAt(1).getLayoutParams().height = 60;
         
         if (savedInstanceState != null) {
             mTabHost.setCurrentTabByTag(savedInstanceState.getString("tab"));

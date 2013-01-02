@@ -1,5 +1,6 @@
 package com.anirudhr.timeMan;
 
+import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.anirudhr.timeMan.StatisticsFragment.CurrentListFragment;
 
 import android.app.Activity;
@@ -18,5 +19,8 @@ public class GlobalAccess {
 		sa = new SimpleAdapter(a.getApplicationContext(), settings.getAllXML(), R.layout.stats_list_item, new String[]{XmlUtilites.TAG_DATE, XmlUtilites.TAG_UTIL}, new int[]{R.id.history_date, R.id.history_util});
 		clf.setListAdapter(sa);
 	}
+	
+	//for changing actionbar title
+	public static SherlockFragmentActivity sha;
 }
 
