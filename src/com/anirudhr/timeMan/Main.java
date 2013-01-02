@@ -2,17 +2,21 @@ package com.anirudhr.timeMan;
 
 import java.util.ArrayList;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TabHost;
 import android.widget.TabWidget;
+import android.widget.Toast;
+
 import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
@@ -42,10 +46,10 @@ public class Main extends SherlockFragmentActivity {
         mTabsAdapter = new TabsAdapter(this, mTabHost, mViewPager);
 
         mTabsAdapter.addTab(mTabHost.newTabSpec("Current").setIndicator("Current"),
-        		TimeList.CurrentListFragment.class, null);
+        		TimeListFragment.CurrentListFragment.class, null);
         
         mTabsAdapter.addTab(mTabHost.newTabSpec("Statistics").setIndicator("Statistics"),
-        		Statistics.CurrentListFragment.class, null);
+        		StatisticsFragment.CurrentListFragment.class, null);
 
         
         //TODO: write a setheights method
@@ -66,13 +70,33 @@ public class Main extends SherlockFragmentActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
     	switch (item.getItemId()) {
     	case R.id.settings:
-        	Log.d("fox", "settings");
-        	//startActivity(new Intent(this, Help.class));
+        	startActivity(new Intent(this, PrefActivity.class));
         	return true;
         case R.id.about:
-        	Log.d("fox", "about");
-        	//startActivity(new Intent(this, About.class));
+        	Toast.makeText(getApplicationContext(), "I am a fox!", Toast.LENGTH_SHORT).show();
         	return true;
+        case R.id.reset:
+        	AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        	builder.setMessage("Are you sure? This will destroy all history and close the application")
+        	       .setCancelable(false)
+        	       .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+        	           public void onClick(DialogInterface dialog, int id) {
+        	                try{
+        	                	getApplicationContext().deleteFile(XmlUtilites.FILENAME);
+        	                	Main.this.finish();
+        	                }catch(Exception e){
+        	                	e.printStackTrace();
+        	                }
+        	           }
+        	       })
+        	       .setNegativeButton("No", new DialogInterface.OnClickListener() {
+        	           public void onClick(DialogInterface dialog, int id) {
+        	                dialog.cancel();
+        	           }
+        	       });
+        	AlertDialog alert = builder.create();
+        	alert.show();
+        	
         default:
         	return super.onOptionsItemSelected(item);
     	}

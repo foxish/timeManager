@@ -31,6 +31,7 @@
       android:name=".db.MyTodoContentProvider"
       android:authorities="com.anirudhr.timeMan.db" >
       </provider>
+      <activity android:name=".PrefActivity"></activity>
         
     </application>
 

@@ -3,7 +3,6 @@ package com.anirudhr.timeMan;
 import com.anirudhr.timeMan.R;
 import com.anirudhr.timeMan.db.TodoTable;
 
-import android.R.color;
 import android.app.Activity;
 import android.content.Context;
 import android.database.Cursor;
@@ -15,12 +14,10 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 public class TimeListAdapter extends CursorAdapter  {
-	private Activity a;
-	private TimeStructures ts;
+	private TimeUtilites ts;
 	public TimeListAdapter(Context con, Activity a, Cursor c, boolean autoRequery) {
 		super(con, c, autoRequery);
-		this.a = a;
-        ts = new TimeStructures(a);
+        ts = new TimeUtilites(a);
 	}
 	@Override
 	public void bindView(View vi, Context arg1, Cursor cursor) {
