@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
+    <PreferenceCategory android:title="@string/app_name" >
+    	<EditTextPreference 
+            	android:title="@string/pref_text" 
+            	android:summary="@string/pref_text_desc" 
+            	android:key="resetTime"
+            	android:defaultValue="0000"/>
+    </PreferenceCategory>
+    
+    <PreferenceCategory android:title="@string/about_text" >
+    	<Preference 
+            	android:title="@string/app_name" 
+            	android:summary="@string/dev_text" 
+            	android:key="notused"/>
+    </PreferenceCategory>
+</PreferenceScreen>
