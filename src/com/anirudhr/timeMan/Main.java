@@ -36,7 +36,7 @@ public class Main extends SherlockFragmentActivity {
     protected void onCreate(Bundle savedInstanceState) {
         setTheme(R.style.Sherlock___Theme_DarkActionBar);
         super.onCreate(savedInstanceState);
-
+        GlobalAccess.a = this; //maintain static ref to main activity (stupid, I know)
         setContentView(R.layout.fragment_tabs_pager);
         
         mTabHost = (TabHost)findViewById(android.R.id.tabhost);
@@ -59,6 +59,7 @@ public class Main extends SherlockFragmentActivity {
         if (savedInstanceState != null) {
             mTabHost.setCurrentTabByTag(savedInstanceState.getString("tab"));
         }
+        
     }
     
     public boolean onCreateOptionsMenu(Menu menu) {

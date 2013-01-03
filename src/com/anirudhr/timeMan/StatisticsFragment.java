@@ -34,7 +34,6 @@ public class StatisticsFragment extends SherlockFragmentActivity	{
 	    //hackish    
 			GlobalAccess.clf = this;
 	        GlobalAccess.sa = adapter;
-	        GlobalAccess.a = getActivity();
 	        GlobalAccess.settings = utilities;
 	        GlobalAccess.changeData();
 		}

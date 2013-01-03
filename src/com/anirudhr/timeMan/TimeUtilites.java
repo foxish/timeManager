@@ -10,6 +10,7 @@ import com.anirudhr.timeMan.db.MyTodoContentProvider;
 import com.anirudhr.timeMan.db.TodoTable;
 
 import android.app.Activity;
+import android.content.ContentValues;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.graphics.Color;
@@ -52,6 +53,15 @@ public class TimeUtilites{
 	      return ret;
 	    }
 	    return 0;
+	}
+	
+	private void updateDatabase(long id){
+		long time = getExpirationTime() - getCurrentTaskStart() + getOffsetFromDatabase(id);
+		ContentValues values = new ContentValues();
+		values.put(TodoTable.COLUMN_ID, id);
+		values.put(TodoTable.COLUMN_TIME, time);
+		Uri todoUri = Uri.parse(MyTodoContentProvider.CONTENT_URI + "/" + id);
+		a.getContentResolver().update(todoUri, values, null, null);
 	}
 
 	public void toggleColor(TextView tv, boolean running){
@@ -121,8 +131,18 @@ public class TimeUtilites{
 				//no action needed
 				return false;
 			}else{
-				if(getCurrentTaskStart() < getExpirationTime())
+				//set rollup time, for the xml to write into history
+				setRollupTime(getCurrentTaskStart());
+				
+				//if a task is running, its time will be reset, flush changes to database first
+				if(getRunning() > 0)
+					updateDatabase(getRunning());
+				
+				//set new expiration time
+				if(getCurrentTaskStart() < getExpirationTime()){
 					setCurrentTaskStart(timeOfExpiration(PREVIOUS));
+				}
+				
 				setExpirationTime();
 				return true;
 			}
@@ -131,8 +151,16 @@ public class TimeUtilites{
 			setExpirationTime();
 			return false;
 		}
-			
 	}
+	
+	private void setRollupTime(long time){
+		editor.putLong("rollUp", time);//listid of 0 indicates no item
+		editor.commit();
+	}
+	public long getRollupTime(){
+		return settings.getLong("rollUp", getCurrentTaskStart());
+	}
+	
 	private long timeOfExpiration(int dayOffset) {
 		//returns the NEXT time of expiration, unless dayOffset is negative
 		//supply dayOffset as -1 or 0

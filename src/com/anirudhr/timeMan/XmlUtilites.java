@@ -62,11 +62,14 @@ public class XmlUtilites {
 //			<util>10</util>
 //		</day>
 	    	
-    	
+    	//reset productive and totals
+	    totalProductive = 0;
+	    totalTime = 0;
+	    
     	String[] projection = {TodoTable.COLUMN_ACTIVITY , TodoTable.COLUMN_TIME, TodoTable.COLUMN_PRODUCTIVE };
 	    Uri uri = Uri.parse(String.valueOf(MyTodoContentProvider.CONTENT_URI));
 	    final Cursor cursor = a.getContentResolver().query(uri, projection, null, null, null);
-	    xmlDate = ts.getDate(ts.getCurrentTaskStart());
+	    xmlDate = ts.getDate(ts.getRollupTime());
 	    Runnable xmlCreate = new Runnable(){
 			@Override
 			public void run() {
@@ -103,18 +106,23 @@ public class XmlUtilites {
 	    Uri uri = Uri.parse(String.valueOf(MyTodoContentProvider.CONTENT_URI));
 	    final HashMap<String, Long> dayTasks = new HashMap<String, Long>();
 	    
+	    //reset productive and totals
+	    totalProductive = 0;
+	    totalTime = 0;
+	    
 		final Cursor cursor = a.getContentResolver().query(uri, projection, null, null, null);
 		Runnable getToday = new Runnable(){
 			@Override
 			public void run() {
 				try {
+					
 					for (boolean hasItem = cursor.moveToFirst(); hasItem; hasItem = cursor.moveToNext()) {
 						long id = cursor.getLong(cursor.getColumnIndex(TodoTable.COLUMN_ID));
 						String activityName = cursor.getString(cursor.getColumnIndex(TodoTable.COLUMN_ACTIVITY));
 						long isProductive = cursor.getLong(cursor.getColumnIndex(TodoTable.COLUMN_PRODUCTIVE));
 						long timeSpent = cursor.getLong(cursor.getColumnIndex(TodoTable.COLUMN_TIME));
 						
-						if(id == ts.getRunning())
+						if( ts.getRunning() > 0 && id == ts.getRunning())
 							timeSpent += System.currentTimeMillis() - ts.getCurrentTaskStart();
 						
 				        if(timeSpent < 60*1000) //dont count if interval too small (<1min)
@@ -148,7 +156,6 @@ public class XmlUtilites {
     }
     
     public double getUtil(){
-    	
     	double util = (totalTime > 0) ? ((double)totalProductive / (double)totalTime)*100 : 0;
     	return RoundTo2Decimals(util);
     }

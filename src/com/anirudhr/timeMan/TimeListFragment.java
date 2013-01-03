@@ -42,6 +42,11 @@ public class TimeListFragment extends SherlockFragmentActivity
         private Handler resetHandler = new Handler();
         private Runnable resetTask;
         
+        @Override 
+        public void onCreate(Bundle savedInstanceState){
+        	super.onCreate(savedInstanceState);
+	        GlobalAccess.sha = getSherlockActivity();
+        }
         @Override public void onActivityCreated(Bundle savedInstanceState) {
 	        super.onActivityCreated(savedInstanceState);
 	        setEmptyText("No data");
@@ -53,8 +58,7 @@ public class TimeListFragment extends SherlockFragmentActivity
 	        //create instance of the timeStructures
 	        ts = new TimeUtilites(getActivity());
 	        utilities = new XmlUtilites(getActivity());
-	        GlobalAccess.sha = getSherlockActivity();
-		}	
+        }	
 		@Override
 		public void onResume(){
 			super.onResume();
@@ -73,7 +77,11 @@ public class TimeListFragment extends SherlockFragmentActivity
 		public void trackExpiration(){
 			if(ts.timeToReset()){
 				utilities.writeToXML();
-				GlobalAccess.changeData();
+				try{
+					GlobalAccess.changeData();
+				}catch(NullPointerException e){
+					//changeData will be called by StatisticsFragment.allowStaticAccess() at a later time, dont worry
+				}
 				resetDatabase();
 			}
 		}
