@@ -1,6 +1,8 @@
 package com.anirudhr.timeMan;
 
+import android.app.AlertDialog;
 import android.content.ContentValues;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
@@ -86,11 +88,29 @@ public class TimeListFragment extends SherlockFragmentActivity
 		
 		@Override
 		public boolean onContextItemSelected(android.view.MenuItem item) {
-			AdapterContextMenuInfo info = (AdapterContextMenuInfo) item.getMenuInfo();
+			final AdapterContextMenuInfo info = (AdapterContextMenuInfo) item.getMenuInfo();
 			switch (item.getItemId()) {
 			case DELETE_ID:
-			  Uri uri = Uri.parse(MyTodoContentProvider.CONTENT_URI + "/" + info.id);
-			  getActivity().getContentResolver().delete(uri, null, null);
+				AlertDialog.Builder builder = new AlertDialog.Builder(getView().getContext());
+	        	builder.setMessage("Are you sure you want to delete this item?")
+	        	       .setCancelable(false)
+	        	       .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+	        	           public void onClick(DialogInterface dialog, int id) {
+	        	                try{
+	        	                	Uri uri = Uri.parse(MyTodoContentProvider.CONTENT_URI + "/" + info.id);
+	        	      			  	getActivity().getContentResolver().delete(uri, null, null);
+	        	                }catch(Exception e){
+	        	                	e.printStackTrace();
+	        	                }
+	        	           }
+	        	       })
+	        	       .setNegativeButton("No", new DialogInterface.OnClickListener() {
+	        	           public void onClick(DialogInterface dialog, int id) {
+	        	                dialog.cancel();
+	        	           }
+	        	       });
+	        	AlertDialog alert = builder.create();
+	        	alert.show();
 			  return true;
 			case EDIT_ID:
 			Intent i = new Intent(getActivity(), TaskDetailActivity.class);
