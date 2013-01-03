@@ -23,4 +23,6 @@
 	<string name="pref_text_desc">Time (HHMM) to reset and archive timers</string>
 	<string name="dev_text">Creative Commons Attribution License (https://github.com/DarkCthulhu/timeManager)</string>
 	<string name="about_text">About</string>
+	
+	<string name="app_default_state">FT - Stopped</string>
 </resources>

@@ -26,15 +26,16 @@ public Intent execute(Context context, HashMap<String, Long> map, String date) {
 	renderer.setChartTitleTextSize(35);
 	renderer.setLabelsTextSize(20);
 	renderer.setLegendTextSize(20);
+	renderer.setAntialiasing(true);
     
     //background
     renderer.setApplyBackgroundColor(true);
     renderer.setBackgroundColor(Color.BLACK);
     
     //zoom & pan
-    renderer.setPanEnabled(false);
+    renderer.setPanEnabled(true);
     renderer.setZoomEnabled(false);
-
+    
 	//build the chart
 	CategorySeries categorySeries = new CategorySeries("Time Utilization Chart");
 	for (Map.Entry<String, Long> entry : map.entrySet()) {

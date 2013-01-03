@@ -99,7 +99,7 @@ public class XmlUtilites {
 	
 	//get today
 	public HashMap<String, Long> getTasksHash(){
-		String[] projection = {TodoTable.COLUMN_ACTIVITY , TodoTable.COLUMN_TIME, TodoTable.COLUMN_PRODUCTIVE};
+		String[] projection = {TodoTable.COLUMN_ACTIVITY , TodoTable.COLUMN_TIME, TodoTable.COLUMN_PRODUCTIVE, TodoTable.COLUMN_ID};
 	    Uri uri = Uri.parse(String.valueOf(MyTodoContentProvider.CONTENT_URI));
 	    final HashMap<String, Long> dayTasks = new HashMap<String, Long>();
 	    
@@ -109,13 +109,19 @@ public class XmlUtilites {
 			public void run() {
 				try {
 					for (boolean hasItem = cursor.moveToFirst(); hasItem; hasItem = cursor.moveToNext()) {
-				        String activityName = cursor.getString(cursor.getColumnIndex(TodoTable.COLUMN_ACTIVITY));
-				        Long timeSpent = cursor.getLong(cursor.getColumnIndex(TodoTable.COLUMN_TIME));
-				        long isProductive = cursor.getLong(cursor.getColumnIndex(TodoTable.COLUMN_PRODUCTIVE));
+						long id = cursor.getLong(cursor.getColumnIndex(TodoTable.COLUMN_ID));
+						String activityName = cursor.getString(cursor.getColumnIndex(TodoTable.COLUMN_ACTIVITY));
+						long isProductive = cursor.getLong(cursor.getColumnIndex(TodoTable.COLUMN_PRODUCTIVE));
+						long timeSpent = cursor.getLong(cursor.getColumnIndex(TodoTable.COLUMN_TIME));
+						
+						if(id == ts.getRunning())
+							timeSpent += System.currentTimeMillis() - ts.getCurrentTaskStart();
+						
 				        if(timeSpent < 60*1000) //dont count if interval too small (<1min)
 				        	continue;
+				        
+						accumulateTime(Long.valueOf(timeSpent), isProductive);
 				        dayTasks.put(activityName, timeSpent);
-				        accumulateTime(Long.valueOf(timeSpent), isProductive);
 					}
 					cursor.close();
 					
