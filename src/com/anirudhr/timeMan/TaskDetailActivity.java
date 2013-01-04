@@ -101,16 +101,16 @@ public class TaskDetailActivity extends Activity {
 
 	    ContentValues values = new ContentValues();
 	    values.put(TodoTable.COLUMN_ACTIVITY, summary);
-	    values.put(TodoTable.COLUMN_TIME, "0");
 	    values.put(TodoTable.COLUMN_PRIORITY, description);
 	    values.put(TodoTable.COLUMN_PRODUCTIVE, isProductive);
 	    
 	    if (todoUri == null) {
 	      // New todo
-	      todoUri = getContentResolver().insert(MyTodoContentProvider.CONTENT_URI, values);
+	    	values.put(TodoTable.COLUMN_TIME, "0");
+	    	todoUri = getContentResolver().insert(MyTodoContentProvider.CONTENT_URI, values);
 	    } else {
 	      // Update todo
-	      getContentResolver().update(todoUri, values, null, null);
+	    	getContentResolver().update(todoUri, values, null, null);
 	    }
 	  }
 
