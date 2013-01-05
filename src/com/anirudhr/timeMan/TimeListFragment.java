@@ -153,12 +153,17 @@ public class TimeListFragment extends SherlockFragmentActivity
 			}
         }
 		private void updateDatabase(long id){
-			long time = System.currentTimeMillis() - ts.getCurrentTaskStart() + ts.getOffsetFromDatabase(id);
-			ContentValues values = new ContentValues();
-			values.put(TodoTable.COLUMN_ID, id);
-			values.put(TodoTable.COLUMN_TIME, time);
-			Uri todoUri = Uri.parse(MyTodoContentProvider.CONTENT_URI + "/" + id);
-			getActivity().getContentResolver().update(todoUri, values, null, null);
+			try{
+				long time = System.currentTimeMillis() - ts.getCurrentTaskStart() + ts.getOffsetFromDatabase(id);
+				ContentValues values = new ContentValues();
+				values.put(TodoTable.COLUMN_ID, id);
+				values.put(TodoTable.COLUMN_TIME, time);
+				Uri todoUri = Uri.parse(MyTodoContentProvider.CONTENT_URI + "/" + id);
+				getActivity().getContentResolver().update(todoUri, values, null, null);
+			}catch(Exception e){
+				//could happen if you deleted the running task. Ignore and move on
+				e.printStackTrace();
+			}
 		}
 		
 		private void resetDatabase(){
