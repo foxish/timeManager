@@ -96,7 +96,7 @@ public class TimeUtilites{
 	
 	public void startTimer(View v, final long start, long id){
 		//here modify actionbar
-		GlobalAccess.sha.getSupportActionBar().setTitle("FT - Running");
+		GlobalAccess.sha.getSupportActionBar().setTitle("TT - Running");
 		
 		final long offset = getOffsetFromDatabase(id);
 		
@@ -114,7 +114,7 @@ public class TimeUtilites{
 	}
 	
 	public void killTimer(View v){
-		GlobalAccess.sha.getSupportActionBar().setTitle("FT - Stopped");
+		GlobalAccess.sha.getSupportActionBar().setTitle("TT - Stopped");
 		
 		mHandler.removeCallbacks(mUpdateTimeTask);
 		final TextView time = (TextView)v.findViewById(R.id.todayTime);
