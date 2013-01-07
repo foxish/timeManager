@@ -1,5 +1,6 @@
 package com.anirudhr.timeMan.widget;
 
+import com.anirudhr.timeMan.GlobalAccess;
 import com.anirudhr.timeMan.Main;
 import com.anirudhr.timeMan.R;
 import android.app.PendingIntent;
@@ -36,6 +37,8 @@ public class WidgetProvider extends AppWidgetProvider {
 				pendingIntent = PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
 				views.setOnClickPendingIntent(R.id.widget_layout, pendingIntent);
 				appWidgetManager.updateAppWidget(appWidgetId, views);
+				
+				GlobalAccess.updateWidget(context);
 			}
 		
 		}

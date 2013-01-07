@@ -11,7 +11,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TabHost;
@@ -107,7 +106,6 @@ public class Main extends SherlockFragmentActivity {
     @Override
     protected void onPause(){
     	super.onPause();
-    	Log.d("fox", "onPause");
     	GlobalAccess.updateWidget(this.getApplicationContext());
     	}
         
