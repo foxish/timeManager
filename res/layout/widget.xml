@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent"
+	android:background="@drawable/widget_corners"
+	android:paddingLeft="5dp"
+	android:id="@+id/widget_rest"
+	>
+    
+    
+    <LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="fill_parent"
+    android:gravity="center_vertical"
+    android:orientation="vertical"
+    android:padding="2dp"
+    android:id="@+id/widget_layout"
+    >
+
+	    <ImageView 
+			android:src="@drawable/ic_launcher"  
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"			android:layout_gravity="center"	
+	        />
+	    
+  		<TextView android:text="@string/app_name" 
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_gravity="center"
+			/>
+    
+	</LinearLayout>
+	
+	<TextView
+	    android:layout_width="1dp"
+	    android:layout_height="fill_parent"
+	    android:background="@android:color/darker_gray"
+	    android:layout_margin="10dp"
+	    android:padding="10dp"/>
+	
+	<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:paddingLeft="5dp"
+    android:paddingRight="5dp">
+  		
+	    <TextView 
+	        android:id="@+id/tv1"
+	        android:text="@string/current_task" 
+			android:layout_width="50dp"
+			android:layout_marginRight="5dp"
+			android:layout_height="wrap_content"
+			android:layout_gravity="top"></TextView>
+	    
+		<TextView android:text="@string/no_task" 
+			android:id="@+id/widget_currtask"
+			android:layout_width="90dp" 
+			android:layout_height="wrap_content" 
+			android:layout_gravity="top" 
+			android:gravity="center_horizontal"
+			android:maxLines="2"
+			android:layout_toRightOf="@+id/tv1"
+			android:textColor="#ffffff"></TextView>
+	
+		<TextView
+		    android:id="@+id/sep2"
+		    android:layout_width="fill_parent"
+		    android:layout_height="1dp"
+		    android:background="@android:color/darker_gray"
+		    android:layout_margin="1dp"
+		    android:padding="1dp"
+		    android:layout_below="@+id/tv1"/>
+		
+		 <TextView 
+	        android:id="@+id/tv3"
+	        android:text="@string/current_util" 
+			android:layout_width="50dp"
+			android:layout_marginRight="5dp"
+			android:layout_height="wrap_content"
+			android:layout_gravity="top"
+			android:layout_below="@+id/sep2"></TextView>
+		 
+ 		<TextView android:text="@string/no_util" 
+			android:id="@+id/widget_util"
+			android:layout_width="90dp" 
+			android:layout_height="wrap_content" 
+			android:layout_gravity="top" 
+			android:gravity="center_horizontal"
+			android:maxLines="2"
+			android:layout_below="@+id/sep2"
+			android:layout_toRightOf="@+id/tv3"
+			android:paddingTop="10dp"
+			android:textColor="#ffffff"></TextView>
+		
+	</RelativeLayout>
+	
+</LinearLayout>
