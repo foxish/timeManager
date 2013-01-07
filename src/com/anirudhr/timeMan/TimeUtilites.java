@@ -9,8 +9,8 @@ import java.util.Date;
 import com.anirudhr.timeMan.db.MyTodoContentProvider;
 import com.anirudhr.timeMan.db.TodoTable;
 
-import android.app.Activity;
 import android.content.ContentValues;
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.graphics.Color;
@@ -23,11 +23,11 @@ import android.widget.TextView;
 public class TimeUtilites{
 	private SharedPreferences settings;
     private SharedPreferences.Editor editor;
-    private Activity a;
+    private Context a;
     private Handler mHandler = new Handler();
     private Runnable mUpdateTimeTask;
     
-    public TimeUtilites(Activity activityArg){
+    public TimeUtilites(Context activityArg){
     	this.a = activityArg;
     	settings = a.getSharedPreferences(PREFS_NAME, 0);
     	editor = settings.edit();
@@ -53,6 +53,19 @@ public class TimeUtilites{
 	      return ret;
 	    }
 	    return 0;
+	}
+	
+	public String getCurrentTaskName(){
+		String[] projection = { TodoTable.COLUMN_ACTIVITY };
+		Uri uri = Uri.parse(MyTodoContentProvider.CONTENT_URI + "/" + getRunning());
+		Cursor cursor = a.getContentResolver().query(uri, projection, null, null, null);
+		 if (cursor != null) {
+		      cursor.moveToFirst();
+		      String ret =  cursor.getString((cursor.getColumnIndexOrThrow(TodoTable.COLUMN_ACTIVITY)));
+		      cursor.close();
+		      return ret;
+		    }
+		return null;
 	}
 	
 	private void updateDatabase(long id){

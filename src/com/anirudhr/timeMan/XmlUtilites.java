@@ -3,6 +3,7 @@ package com.anirudhr.timeMan;
 import java.io.*;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 
 import org.xmlpull.v1.XmlPullParser;
@@ -13,14 +14,13 @@ import org.xmlpull.v1.XmlSerializer;
 import com.anirudhr.timeMan.db.MyTodoContentProvider;
 import com.anirudhr.timeMan.db.TodoTable;
 
-import android.app.Activity;
 import android.content.Context;
 import android.database.Cursor;
 import android.net.Uri;
 import android.util.Xml;
 
 public class XmlUtilites {
-    private Activity a;
+    private Context a;
     private XmlSerializer xmlSerializer;
     private FileOutputStream fos;      
     private TimeUtilites ts;
@@ -40,7 +40,7 @@ public class XmlUtilites {
     private String key;
     
     
-    public XmlUtilites(Activity activityArg){
+    public XmlUtilites(Context activityArg){
     	this.a = activityArg;
     	ts = new TimeUtilites(a);
     }
@@ -227,6 +227,7 @@ public class XmlUtilites {
 				}
 				parser.next();
 			} while (eventType != XmlPullParser.END_DOCUMENT) ;
+			Collections.reverse(dayList);
 			return dayList;   
 		}catch(Exception e){
 			e.printStackTrace();	

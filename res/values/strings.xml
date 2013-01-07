@@ -25,4 +25,10 @@
 	<string name="about_text">About</string>
 	
 	<string name="app_default_state">TT - Stopped</string>
+	
+	<!--  widget strings -->
+	<string name="current_task">Current Task </string>
+	<string name="no_task">-</string>
+	<string name="current_util">Current Eff (%)</string>
+	<string name="no_util">0</string>
 </resources>

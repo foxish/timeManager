@@ -929,10 +929,11 @@ containing a value of this type.
         public static final int image_bg=0x7f020075;
         public static final int list_selector=0x7f020076;
         public static final int play=0x7f020077;
+        public static final int widget_corners=0x7f020078;
     }
     public static final class id {
         public static final int LinearLayout01=0x7f050034;
-        public static final int about=0x7f050043;
+        public static final int about=0x7f05004a;
         public static final int abs__action_bar=0x7f050022;
         public static final int abs__action_bar_container=0x7f050021;
         public static final int abs__action_bar_subtitle=0x7f050011;
@@ -982,11 +983,12 @@ containing a value of this type.
         public static final int is_productive=0x7f050040;
         public static final int listMode=0x7f050002;
         public static final int list_image=0x7f05003d;
-        public static final int menu_settings=0x7f050041;
+        public static final int menu_settings=0x7f050048;
         public static final int normal=0x7f050001;
         public static final int pager=0x7f050038;
-        public static final int reset=0x7f050044;
-        public static final int settings=0x7f050042;
+        public static final int reset=0x7f05004b;
+        public static final int sep2=0x7f050045;
+        public static final int settings=0x7f050049;
         public static final int showCustom=0x7f050008;
         public static final int showHome=0x7f050005;
         public static final int showTitle=0x7f050007;
@@ -997,8 +999,14 @@ containing a value of this type.
         public static final int todo_edit_button=0x7f050037;
         public static final int todo_edit_description=0x7f050036;
         public static final int todo_edit_summary=0x7f050035;
+        public static final int tv1=0x7f050043;
+        public static final int tv3=0x7f050046;
         public static final int useLogo=0x7f050004;
         public static final int util_text=0x7f05003a;
+        public static final int widget_currtask=0x7f050044;
+        public static final int widget_layout=0x7f050042;
+        public static final int widget_rest=0x7f050041;
+        public static final int widget_util=0x7f050047;
         public static final int wrap_content=0x7f050000;
     }
     public static final class integer {
@@ -1035,6 +1043,7 @@ containing a value of this type.
         public static final int stats_list_item=0x7f03001b;
         public static final int task_list_item=0x7f03001c;
         public static final int todo_edit=0x7f03001d;
+        public static final int widget=0x7f03001e;
     }
     public static final class menu {
         public static final int activity_main=0x7f0d0000;
@@ -1091,6 +1100,10 @@ containing a value of this type.
         public static final int add_task=0x7f0a0012;
         public static final int app_default_state=0x7f0a0025;
         public static final int app_name=0x7f0a000f;
+        /**   widget strings 
+         */
+        public static final int current_task=0x7f0a0026;
+        public static final int current_util=0x7f0a0028;
         public static final int dev_text=0x7f0a0023;
         public static final int hello=0x7f0a0014;
         public static final int is_productive=0x7f0a001e;
@@ -1098,6 +1111,8 @@ containing a value of this type.
         public static final int menu_edit=0x7f0a0017;
         public static final int menu_insert=0x7f0a0015;
         public static final int menu_settings=0x7f0a0010;
+        public static final int no_task=0x7f0a0027;
+        public static final int no_util=0x7f0a0029;
         public static final int pref_hh=0x7f0a001f;
         public static final int pref_mm=0x7f0a0020;
         public static final int pref_text=0x7f0a0021;
@@ -1204,6 +1219,7 @@ containing a value of this type.
     }
     public static final class xml {
         public static final int settings=0x7f040000;
+        public static final int widgetproviderinfo=0x7f040001;
     }
     public static final class styleable {
         /**  Attributes used to style the Action Bar. 

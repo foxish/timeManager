@@ -1,7 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.anirudhr.timeMan"
-    android:versionCode="3"
-    android:versionName="1.5" >
+    android:versionCode="5"
+    android:versionName="2.1" >
 
     <uses-sdk
         android:minSdkVersion="8"
@@ -35,6 +35,17 @@
       </provider>
       <activity android:name=".PrefActivity"></activity>
         
+	<!-- WIDGET & SERVICE -->
+	<service android:name=".widget.WidgetService"></service>
+	<receiver android:name=".widget.WidgetProvider">
+	    <intent-filter>
+	        <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+	    </intent-filter>
+	    <meta-data android:name="android.appwidget.provider"
+	               android:resource="@xml/widgetproviderinfo" />
+	</receiver>
+      
+      
     </application>
 
 </manifest>
