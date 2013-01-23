@@ -1,1 +1,0 @@
-Compiled against ABS v4.2.0 and aChartEngine v1.0.0
