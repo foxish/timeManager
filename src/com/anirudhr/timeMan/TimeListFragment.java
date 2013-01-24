@@ -137,6 +137,7 @@ public class TimeListFragment extends SherlockFragmentActivity
 	    }
 		
 		@Override public void onListItemClick(ListView l, View v, int position, long id) {
+			boolean startNewtask = true;
 			if(ts.getRunning() == 0){
 				//no task running at all
 				final long start = System.currentTimeMillis();
@@ -149,7 +150,13 @@ public class TimeListFragment extends SherlockFragmentActivity
 				//stop all running tasks
 				ts.killTimer(v);
 				updateDatabase(ts.getRunning());
+				if(ts.getRunning() == id){
+					startNewtask = false;
+				}
 				ts.setRunning(0);
+				if(startNewtask){
+					onListItemClick(l, v, position, id);
+				}
 			}
         }
 		private void updateDatabase(long id){
