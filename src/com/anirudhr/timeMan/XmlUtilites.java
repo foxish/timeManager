@@ -23,7 +23,7 @@ public class XmlUtilites {
     private Context a;
     private XmlSerializer xmlSerializer;
     private FileOutputStream fos;      
-    private TimeUtilites ts;
+    private TaskUtilites ts;
     private String xmlDate = null;
     
     private ArrayList<HashMap<String, String>> dayList = null;
@@ -42,7 +42,7 @@ public class XmlUtilites {
     
     public XmlUtilites(Context activityArg){
     	this.a = activityArg;
-    	ts = new TimeUtilites(a);
+    	ts = new TaskUtilites(a);
     }
     public void writeToXML(){
     	

@@ -1,5 +1,20 @@
 package com.anirudhr.timeMan;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.math.BigInteger;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpResponse;
+import org.apache.http.HttpStatus;
+import org.apache.http.StatusLine;
+import org.apache.http.client.ClientProtocolException;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.DefaultHttpClient;
+
 import android.app.AlertDialog;
 import android.content.ContentValues;
 import android.content.DialogInterface;
@@ -34,10 +49,14 @@ public class TimeListFragment extends SherlockFragmentActivity
 	private static final int ADD_PROJECT_ID = Menu.FIRST;
 	private static final int DELETE_ID = Menu.FIRST + 1;
 	private static final int EDIT_ID = Menu.FIRST + 2;
+	
+	private static final String BASE_URL = "";
+	private static final String SALT = "";
+	private static final String PEPPER = "";
 
 	public static class CurrentListFragment extends SherlockListFragment implements LoaderManager.LoaderCallbacks<Cursor>	{
         private TimeListAdapter mAdapter = null;
-        private TimeUtilites ts;
+        private TaskUtilites ts;
         private XmlUtilites utilities;
         private Handler resetHandler = new Handler();
         private Runnable resetTask;
@@ -56,7 +75,7 @@ public class TimeListFragment extends SherlockFragmentActivity
 	        setHasOptionsMenu(true);
 	        
 	        //create instance of the timeStructures
-	        ts = new TimeUtilites(getActivity());
+	        ts = new TaskUtilites(getActivity());
 	        utilities = new XmlUtilites(getActivity());
         }	
 		@Override
@@ -143,6 +162,7 @@ public class TimeListFragment extends SherlockFragmentActivity
 				ts.setCurrentTaskStart(start);
 				ts.setRunning(id);
 				ts.startTimer(v, start, id);
+				sendWebRequest(id);//sends to server
 			}
 			else
 			{
@@ -150,8 +170,74 @@ public class TimeListFragment extends SherlockFragmentActivity
 				ts.killTimer(v);
 				updateDatabase(ts.getRunning());
 				ts.setRunning(0);
+				sendWebRequest(-1);//stops tasks on server
 			}
         }
+		private String buildUrl(long id){
+			//"http://anirudhr.com/status/put.php?message=test1&productive=0&efficiency=82&auth=648153773ccf5c0dad49c5392ce97cb5";
+			
+			StringBuilder bdr = new StringBuilder(BASE_URL);
+			bdr.append("?message=");
+			bdr.append(id != -1 ? ts.getCurrentTaskName() : "-" );
+			bdr.append("&productive=");
+			bdr.append(id != -1 ? ts.getProductive(id): "0");
+			bdr.append("&efficiency=");
+			bdr.append((int)utilities.getUtil());
+			bdr.append("&auth=");
+			bdr.append(getMd5());
+			return bdr.toString();
+		}
+		//credit: http://www.sergiy.ca/how-to-make-java-md5-and-sha-1-hashes-compatible-with-php-or-mysql/
+		private String getMd5(){
+			//will use salt and pepper 
+			String toHash = SALT + PEPPER;
+			//some operation, removed for security reasons
+			
+			MessageDigest md5 = null;
+			try {
+				md5 = MessageDigest.getInstance("MD5");
+			} catch (NoSuchAlgorithmException e) {
+				e.printStackTrace();
+			}
+			md5.update(toHash.getBytes());
+			BigInteger hash = new BigInteger(1, md5.digest());
+	        String result = hash.toString(16);
+	        while(result.length() < 32) {
+	            result = "0" + result;
+	        }
+	        
+			return result;
+		}
+
+		
+		private boolean sendWebRequest(final long id){
+			new Thread(new Runnable() {
+		        public void run() {
+		        	HttpClient httpClient = new DefaultHttpClient();  
+					String url = buildUrl(id);
+					HttpGet httpGet = new HttpGet(url);
+					try {
+					    HttpResponse response = httpClient.execute(httpGet);
+					    StatusLine statusLine = response.getStatusLine();
+					    if (statusLine.getStatusCode() == HttpStatus.SC_OK) {
+					        HttpEntity entity = response.getEntity();
+					        ByteArrayOutputStream out = new ByteArrayOutputStream();
+					        entity.writeTo(out);
+					        out.close();
+					        //String responseStr = out.toString();
+					    } else {
+					        // handle bad response
+					    }
+					} catch (ClientProtocolException e) {
+					    // handle exception
+					} catch (IOException e) {
+					    // handle exception
+					}
+		        }
+		    }).start();
+			return false;
+		}
+		
 		private void updateDatabase(long id){
 			try{
 				long time = System.currentTimeMillis() - ts.getCurrentTaskStart() + ts.getOffsetFromDatabase(id);

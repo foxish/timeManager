@@ -46,7 +46,7 @@ public class GlobalAccess {
 	}
 	
 	private static String getCurrentTaskName() {
-		TimeUtilites tu = new TimeUtilites(c);
+		TaskUtilites tu = new TaskUtilites(c);
 		if(tu.getRunning() <= 0){
 			return "-";
 		}else{

@@ -14,10 +14,10 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 public class TimeListAdapter extends CursorAdapter  {
-	private TimeUtilites ts;
+	private TaskUtilites ts;
 	public TimeListAdapter(Context con, Activity a, Cursor c, boolean autoRequery) {
 		super(con, c, autoRequery);
-        ts = new TimeUtilites(a);
+        ts = new TaskUtilites(a);
 	}
 	@Override
 	public void bindView(View vi, Context arg1, Cursor cursor) {

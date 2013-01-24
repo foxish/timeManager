@@ -43,7 +43,7 @@ public class PrefActivity extends PreferenceActivity{
     @Override
     protected void onPause() {
         super.onPause();
-        TimeUtilites tu = new TimeUtilites(this);
+        TaskUtilites tu = new TaskUtilites(this);
         tu.setExpirationTime();
         Toast.makeText(getApplicationContext(), "Restart Application for changes to take effect", Toast.LENGTH_SHORT).show();
     }

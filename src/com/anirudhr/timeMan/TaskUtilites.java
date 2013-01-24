@@ -20,14 +20,14 @@ import android.preference.PreferenceManager;
 import android.view.View;
 import android.widget.TextView;
 
-public class TimeUtilites{
+public class TaskUtilites{
 	private SharedPreferences settings;
     private SharedPreferences.Editor editor;
     private Context a;
     private Handler mHandler = new Handler();
     private Runnable mUpdateTimeTask;
     
-    public TimeUtilites(Context activityArg){
+    public TaskUtilites(Context activityArg){
     	this.a = activityArg;
     	settings = a.getSharedPreferences(PREFS_NAME, 0);
     	editor = settings.edit();
@@ -110,7 +110,6 @@ public class TimeUtilites{
 	public void startTimer(View v, final long start, long id){
 		//here modify actionbar
 		GlobalAccess.sha.getSupportActionBar().setTitle("TT - Running");
-		
 		final long offset = getOffsetFromDatabase(id);
 		
 		mHandler.removeCallbacks(mUpdateTimeTask);			
@@ -217,6 +216,20 @@ public class TimeUtilites{
 	public void setExpirationTime() {
 		editor.putLong("expirationTime", timeOfExpiration(NEXT));
 		editor.commit();
+	}
+	
+	public long getProductive(long id){
+	    String[] projection = { TodoTable.COLUMN_PRODUCTIVE };
+	    Uri uri = Uri.parse(MyTodoContentProvider.CONTENT_URI + "/" + id);
+	    long isChecked = 0;
+	    Cursor cursor = a.getContentResolver().query(uri, projection, null, null,
+	        null);
+	    if (cursor != null) {
+	      cursor.moveToFirst();
+	      isChecked = cursor.getLong(cursor.getColumnIndexOrThrow(TodoTable.COLUMN_PRODUCTIVE));
+	      cursor.close();
+	    }
+	    return isChecked;
 	}
 
 	private static final String PREFS_NAME = "FoxTimer";
