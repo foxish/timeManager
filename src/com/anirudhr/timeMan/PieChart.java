@@ -36,10 +36,13 @@ public Intent execute(Context context, HashMap<String, Long> map, String date) {
     renderer.setPanEnabled(true);
     renderer.setZoomEnabled(false);
     
+    //setup timeutilities
+    TimeUtilites tu = new TimeUtilites(context);
+    
 	//build the chart
 	CategorySeries categorySeries = new CategorySeries("Time Utilization Chart");
 	for (Map.Entry<String, Long> entry : map.entrySet()) {
-		categorySeries.add(entry.getKey(), entry.getValue());
+		categorySeries.add(entry.getKey() + " (" + tu.getTimeString(0, 0, entry.getValue()) + ")", entry.getValue());
 		//System.out.println("key=" + entry.getKey() + ", value=" + entry.getValue());
 	}
 	return ChartFactory.getPieChartIntent(context, categorySeries, renderer, "Time Utilization");

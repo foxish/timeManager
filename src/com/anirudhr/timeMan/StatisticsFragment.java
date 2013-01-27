@@ -40,8 +40,10 @@ public class StatisticsFragment extends SherlockFragmentActivity	{
 		@Override public void onListItemClick(ListView l, View v, int position, long id) {
             //launch detail-activity
 			TextView tv = (TextView)v.findViewById(R.id.history_date);
+			TextView tv2 = (TextView)v.findViewById(R.id.history_util);
+			
 			String date = (String) tv.getText();
-			Intent pieChart = new PieChart().execute(this.getActivity().getApplicationContext(), utilities.getTasksHash(date), date);
+			Intent pieChart = new PieChart().execute(this.getActivity().getApplicationContext(), utilities.getTasksHash(date), date + " (Util - " + tv2.getText() + "%)");
 			startActivity(pieChart);
 			//Log.i("UserClick", "Item clicked: " + id);
         }
@@ -62,7 +64,7 @@ public class StatisticsFragment extends SherlockFragmentActivity	{
 		@Override public boolean onOptionsItemSelected(MenuItem item) {
             switch (item.getItemId()) {
             	case TODAY_CHART:
-            		Intent pieChart = new PieChart().execute(this.getActivity().getApplicationContext(), utilities.getTasksHash(), "Today - Util(%) " + String.valueOf(utilities.getUtil()));
+            		Intent pieChart = new PieChart().execute(this.getActivity().getApplicationContext(), utilities.getTasksHash(), "Today's Util - " + String.valueOf(utilities.getUtil()) + "%");
         			startActivity(pieChart);
             		break;
             }	
