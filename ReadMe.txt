@@ -17,8 +17,7 @@ Compiled against ABS v4.2.0 and aChartEngine v1.0.0 (prerequisites to build)
  - TimeListFragment.java -> Main page. List of timers
  - TimeUtilites.java -> A collection of a lot of ultility functions to convert time to different formats
  - XmlUtilites.java -> The archived data is stored as XML. Reading and writing that are done by this class		
- - globalAccess.java -> shameful things that must never have been written this way. No memory leak. 
-                        Only context is stored. Will refactor this BS "someday" (read never).
+ - globalAccess.java -> shameful things that must never have been written this way. Will refactor this BS "someday" (read never).
 		
 
  db/
